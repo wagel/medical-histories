@@ -1,0 +1,29 @@
+# Environment variables and virtual environments
+**/.env
+.env
+**/venv/
+venv/
+.venv
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Sensitive files
+*.pem
+*.key
+*.cert
+*.crt
+*.password
+*.secret
+credentials.json
+secrets.json
+config.json
+.DS_Store
