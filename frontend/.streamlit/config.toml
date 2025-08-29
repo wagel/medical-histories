@@ -1,0 +1,11 @@
+[theme]
+primaryColor = "#00e0ff"  # "#00e0ff"  # Keeping your original primary color
+secondaryColor = "#00e0ff"
+backgroundColor = "#0f1116"
+secondaryBackgroundColor = "#0f1116"
+textColor = "FFFFFF"
+font = "monospace"
+
+[server]
+enableXsrfProtection = true
+enableCORS = false

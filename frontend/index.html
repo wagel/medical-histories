@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KLAIMZY by Waggel</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #101115;
+            --text-color: #ffffff;
+            --secondary-bg: #1e1f23;
+            --border-color: #2d2e32;
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Source Code Pro', monospace;
+            --font-base: var(--font-mono);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-base);
+            color: var(--text-color);
+            letter-spacing: -0.02em;
+        }
+
+        /* ASCII Art Header Styles */
+        .header-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            overflow: visible;
+        }
+
+        .ascii-art {
+            font-weight: bold;
+            color: #FFA500;
+            font-family: monospace;
+            white-space: pre;
+            transform: rotate(-5deg) scale(1.4);
+            position: relative;
+            text-align: center;
+            display: inline-block;
+            line-height: 1.2;
+            transform-origin: center center;
+            margin: 20px;
+            transform-origin: center center;
+            margin-left: -100px; /* Shift left to account for the "by waggel" space */
+        }
+
+        .by-waggel {
+            position: absolute;
+            right: -200px;
+            bottom: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-5px);
+            font-family: var(--font-mono);
+            font-weight: 500;
+        }
+
+        .waggel-logo {
+            width: 160px;
+            height: auto;
+            vertical-align: middle;
+            margin-left: 10px;
+            opacity: 1;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .left-column {
+            flex: 3;
+        }
+
+        .right-column {
+            flex: 2;
+        }
+
+        /* Button Styles */
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: var(--secondary-bg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-family: var(--font-mono);
+            letter-spacing: -0.02em;
+            font-weight: 500;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #ff6b00, #ff8533);
+            color: white;
+            height: 3rem;
+            font-size: 1.1rem;
+            border: 1px solid #ff6b00;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            letter-spacing: 0.02em;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, var(--secondary-bg), #2d2e32);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            border-color: #ff6b00;
+        }
+
+        /* Chat Interface */
+        .chat-section {
+            background: linear-gradient(145deg, var(--secondary-bg), rgba(30, 31, 35, 0.7));
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .chat-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: 12px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 0, 0.3);
+            border-radius: 2px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 0, 0.5);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(16, 17, 21, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-family: var(--font-base);
+            font-size: 14px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .chat-message {
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: rgba(45, 46, 50, 0.5);
+            border-left: 2px solid #ff6b00;
+            font-size: 14px;
+            line-height: 1.4;
+            animation: slideIn 0.3s ease;
+        }
+
+        .chat-message.user {
+            background: rgba(255, 107, 0, 0.1);
+            margin-left: 20px;
+        }
+
+        .chat-message.assistant {
+            background: rgba(45, 46, 50, 0.5);
+            margin-right: 20px;
+        }
+
+        .chat-message strong {
+            color: #ff6b00;
+            font-weight: 500;
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(5px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-text {
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        .claim-id {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 15px 0;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 20px 0 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ASCII Art Header -->
+    <div class="header-container">
+        <div class="ascii-art">
+            <pre>        ██╗  ██╗██╗      █████╗ ██╗███╗   ███╗███████╗██╗   ██╗
+        ██║ ██╔╝██║     ██╔══██╗██║████╗ ████║╚══███╔╝╚██╗ ██╔╝
+        █████╔╝ ██║     ███████║██║██╔████╔██║  ███╔╝  ╚████╔╝ 
+        ██╔═██╗ ██║     ██╔══██║██║██║╚██╔╝██║ ███╔╝    ╚██╔╝  
+        ██║  ██╗███████╗██║  ██║██║██║ ╚═╝ ██║███████╗   ██║   
+        ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝   ╚═╝   </pre>
+            <div class="by-waggel">
+                <div>by</div>
+                <img class="waggel-logo" src="Waggel-Primary-Logos/SVG/waggel-blue.svg" alt="Waggel Logo">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <p class="welcome-text">Hello! I'm Klaimzy, your AI claims assistant. I'm here to get through nasty medical histories FAST. ⚡️⚡️⚡️</p>
+            
+            <p class="claim-id">ClaimID: clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c</p>
+            
+            <button class="button button-primary" onclick="analyzeClaim()">Analyze Claim</button>
+            
+            <h2>Documents</h2>
+            <button class="button button-secondary" onclick="window.open('https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c&attachmentId=5062418c-c7d2-4493-8a05-3a39485318c4', '_blank')">Medical History</button>
+            <button class="button button-secondary" onclick="window.open('https://www.waggel.co.uk/latest-policy-documents', '_blank')">Policy Wording</button>
+            <button class="button button-secondary" onclick="window.open('https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c', '_blank')">Claim Profile</button>
+            <button class="button button-secondary" onclick="showData()">Data on Record</button>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <div class="chat-section">
+                <h2>Stuck? Ask Klaimzy!</h2>
+                <div class="chat-container" id="chat-history"></div>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                    <button class="button button-secondary" onclick="sendMessage()" style="width: auto; margin: 0; padding: 8px 20px;">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentConversationId = null;
+        const BACKEND_URL = 'http://localhost:8000';  // Update this if needed
+
+        async function analyzeClaim() {
+            const chatHistory = document.getElementById('chat-history');
+            chatHistory.innerHTML = ''; // Clear existing chat
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/conversations/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        initial_message: "Please analyze this claim and medical history."
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                currentConversationId = data.conversation_id;
+
+                // Display messages
+                data.messages.forEach(msg => {
+                    if (msg.role !== 'system') {
+                        const messageClass = msg.role === 'user' ? 'user' : 'assistant';
+                        chatHistory.innerHTML += `
+                            <div class="chat-message ${messageClass}">
+                                <strong>${msg.role === 'user' ? 'You' : 'Klaimzy'}:</strong> ${msg.content}
+                            </div>`;
+                    }
+                });
+
+                // Scroll to bottom
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to analyze claim. Please try again.');
+            }
+        }
+
+        function showData() {
+            const data = {
+                "file_name": "file_5062418c-c7d2-4493-8a05-3a39485318c4.pdf",
+                "claim_id": "clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c",
+                "claim_url": "https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c",
+                "medical_history_url": "https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c&attachmentId=5062418c-c7d2-4493-8a05-3a39485318c4",
+                "policy_wording_url": "https://www.waggel.co.uk/latest-policy-documents"
+            };
+            alert(JSON.stringify(data, null, 2));
+        }
+
+        async function sendMessage() {
+            if (!currentConversationId) {
+                alert('Please analyze the claim first.');
+                return;
+            }
+
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            const chatHistory = document.getElementById('chat-history');
+
+            if (message) {
+                try {
+                    // Add user message to chat immediately
+                    chatHistory.innerHTML += `
+                        <div class="chat-message user">
+                            <strong>You:</strong> ${message}
+                        </div>`;
+                    input.value = '';
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+                    // Send to backend
+                    const response = await fetch(`${BACKEND_URL}/conversations/${currentConversationId}/messages`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    
+                    // Add assistant's response
+                    const lastMessage = data.messages[data.messages.length - 1];
+                    chatHistory.innerHTML += `
+                        <div class="chat-message assistant">
+                            <strong>Klaimzy:</strong> ${lastMessage.content}
+                        </div>`;
+                    
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                } catch (error) {
+                    console.error('Error:', error);
+                    chatHistory.innerHTML += `
+                        <div class="chat-message assistant">
+                            <strong>System:</strong> Failed to send message. Please try again.
+                        </div>`;
+                }
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
