@@ -45,19 +45,19 @@ def show_error(message: str):
     st.error(f"⚠️ {message} ⚠️ ‼️😵‍💫", icon="🚨")
 
 
-
 def assert_pet_data_on_record_match(test: bool = True):
     if test:
         show_error("Pet data in medical history does not match data on record.")
+
 
 def assert_user_data_on_record_match(test: bool = True):
     if test:
         show_error("User data in medical history does not match data on record.")
 
+
 def assert_no_pre_existing_condition(test: bool = True):
     if test:
-        show_error("No pre-existing condition found.")
-
+        show_error("Pre-existing condition flagged 🚩. Check medical history or ask Klaimzy.")
 
 
 def document_section():
@@ -94,6 +94,7 @@ def klaimzy_header():
         unsafe_allow_html=True
     )
     st.markdown(f"##### ClaimID: {CLAIM_ID}")
+
 
 def analyze_claim_section():
     analyze_button = st.button("Analyze Claim", key="analyze", help="Analyze the claim data", use_container_width=True, type="primary")
