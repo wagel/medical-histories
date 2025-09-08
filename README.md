@@ -50,3 +50,28 @@ The system flags the following issues:
 - Mismatch on internal vet info
 - Unaccounted for dates
 - Illness occurring BEFORE policy
+
+
+# Launch Current Prototype
+
+```sh
+# ensure docker daeman is running
+open -a docker
+
+# start the backend API server
+docker compose up
+
+# start the front end
+cd frontend-streamlit &&
+streamlit run streamlit_app.py
+```
+
+---
+
+# Future Work 🔮
+
+Interact with Notion programatically via the API or agentically MCP.
+
+- [Notion API query database](https://developers.notion.com/reference/post-database-query)
+- [Notion MCP server docs](https://github.com/makenotion/notion-mcp-server)
+- [Notion MCP tutorial](https://www.youtube.com/watch?v=Z1ZQ68DFN6E)
