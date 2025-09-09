@@ -1,5 +1,6 @@
-from mh_agents.agent_base import AgenticBase
 import logging
+
+from mh_agents.agent_base import AgenticBase
 
 
 class ExtractInfoAgent(AgenticBase):

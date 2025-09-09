@@ -3,7 +3,7 @@
 Goal:
 
 - Showcase initial ideas
-- Generate future ideas 
+- Generate future ideas
 
 
 ## Klaimzy Questions 🔎
@@ -22,7 +22,7 @@ Where is the pet owner from? Give me some context to make my message more person
 
 - Pre-existing condition
 - missing histories for specific dates
-- mismatch internal info 
+- mismatch internal info
 
 ## Key Considerations 💡
 
@@ -44,4 +44,3 @@ Identify lowest hanging fruit:
 - There is a natural & obvious progression to a more complete system.
 - Requires minimal changes from FE team.
 - We are confident in the stability of the internal data structures.
-

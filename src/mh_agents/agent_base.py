@@ -1,7 +1,8 @@
-import os
-from openai import OpenAI
 import logging
+import os
+
 from dotenv import load_dotenv
+from openai import OpenAI
 
 
 class AgenticBase:
@@ -10,7 +11,7 @@ class AgenticBase:
         try:
             self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         except Exception:
-            load_dotenv('../.env')
+            load_dotenv("../.env")
             self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         except Exception as e:
             print(f"Error initializing OpenAI client: {e}")
@@ -29,7 +30,7 @@ def setup_logger(name: str):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger

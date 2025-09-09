@@ -1,6 +1,7 @@
+import logging
+
 import pandas as pd
 from openai import OpenAI
-import logging
 
 # =========================================
 # File utils ==============================
@@ -8,10 +9,7 @@ import logging
 
 
 def upload_file_to_openai(client: OpenAI, path_to_file: str):
-    return client.files.create(
-        file=open(path_to_file, "rb"),
-        purpose="user_data"
-    )
+    return client.files.create(file=open(path_to_file, "rb"), purpose="user_data")
 
 
 def delete_file_from_openai(client: OpenAI, file_id: str):
@@ -22,16 +20,12 @@ def generate_pdf_input(client: OpenAI, file_id: str, prompt: str = "Attached is 
     return {
         "role": "user",
         "content": [
-            {
-                "type": "input_text",
-                "text": prompt
-            },
+            {"type": "input_text", "text": prompt},
             {
                 "type": "input_file",
                 "file_id": file_id,
             },
-
-        ]
+        ],
     }
 
 
@@ -162,33 +156,33 @@ def fetch_lexicon():
         "wt": "wt",
         "X": "X",
         "Y": "Y",
-        "Z": "Z"
+        "Z": "Z",
     }
 
 
 def fetch_prompt():
     return """
-    Extract the following critical information from the supplied medical history documents.  
-    Return the result in a Markdown table with columns: **Info | Value**.  
+    Extract the following critical information from the supplied medical history documents.
+    Return the result in a Markdown table with columns: **Info | Value**.
 
-    Required fields:  
-        - "From" Date (claim start date)  
-        - DOB (pet)  
-        - Condition (what is being claimed)  
-        - Animal's name, address, breed, DOB  
-        - Specific treatment dates  
-        - When issue was noticed  
-        - Accident/Injury type  
-        - Sex, breed, age  
-        - Pre-existing condition?  
-        - Incomplete history (missing records)  
-        - Policy wording (exact clause)  
-        - Last paid date (for continuations)  
-        - Diagnosis of past episodes  
-        - Related symptoms  
-        - Clinical history summary  
-        - Invoice content (treatments, pricing, anomalies)  
-        - Policy limit/money left 
+    Required fields:
+        - "From" Date (claim start date)
+        - DOB (pet)
+        - Condition (what is being claimed)
+        - Animal's name, address, breed, DOB
+        - Specific treatment dates
+        - When issue was noticed
+        - Accident/Injury type
+        - Sex, breed, age
+        - Pre-existing condition?
+        - Incomplete history (missing records)
+        - Policy wording (exact clause)
+        - Last paid date (for continuations)
+        - Diagnosis of past episodes
+        - Related symptoms
+        - Clinical history summary
+        - Invoice content (treatments, pricing, anomalies)
+        - Policy limit/money left
 
     Note:
         - Use the lexicon where applicable to ensure consistent terminology.
@@ -202,7 +196,7 @@ def setup_logger(name: str, level: int = logging.INFO):
     logger = logging.getLogger(name)
     logger.setLevel(level)
     handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
