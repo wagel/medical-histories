@@ -21,17 +21,17 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Extract version from config.deployment.yaml
-      run: |
-        echo "WAGEXTRACT_VERSION=$(yq '.wagextract.version' config.deployment.yaml)" >> $GITHUB_ENV
+    # - name: Extract version from config.deployment.yaml
+    #   run: |
+    #     echo "WAGEXTRACT_VERSION=$(yq '.wagextract.version' config.deployment.yaml)" >> $GITHUB_ENV
 
-    - name: Cache pip dependencies
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/requirements*.txt', '**/setup.py') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-${{ matrix.python-version }}-
+    # - name: Cache pip dependencies
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: ~/.cache/pip
+    #     key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/requirements*.txt', '**/setup.py') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-pip-${{ matrix.python-version }}-
 
     # - name: Install dependencies
     #   run: |
