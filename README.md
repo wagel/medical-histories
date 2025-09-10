@@ -26,6 +26,10 @@ cd frontend-streamlit &&
 streamlit run streamlit_app.py
 ```
 
+> [Klaimzy Demo Notes👾](https://github.com/wagel/medical-histories/tree/main/frontend-streamlit/demo-notes.md)
+
+
+
 ---
 
 # 🔮 Future Work

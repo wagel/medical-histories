@@ -6,9 +6,16 @@ venv/
 .venv
 env/
 ENV/
-
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+.coverage.*.*
+.coverage.*.*.*
 # Python
 __pycache__/
+.pytest_cache
 *.py[cod]
 *.so
 .Python
