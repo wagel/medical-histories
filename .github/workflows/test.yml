@@ -1,0 +1,50 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    # - name: Extract version from config.deployment.yaml
+    #   run: |
+    #     echo "WAGEXTRACT_VERSION=$(yq '.wagextract.version' config.deployment.yaml)" >> $GITHUB_ENV
+
+    # - name: Cache pip dependencies
+    #   uses: actions/cache@v4
+    #   with:
+    #     path: ~/.cache/pip
+    #     key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/requirements*.txt', '**/setup.py') }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements/requirements_cicd_tests.txt
+#        pip install -r requirements/requirements_deployment.txt
+#        pip install -e .[dev]
+#        pip install "git+https://${{ secrets.GH_TOKEN }}@github.com/wagel/ml-deployment-testing-framework.git@main#egg=mldt"
+
+
+    - name: Run tests and linting
+      run: |
+        pytest tests/ -v
+        black . --check --line-length=150
+        flake8 . --max-line-length=150
+        isort . --check-only --profile=black

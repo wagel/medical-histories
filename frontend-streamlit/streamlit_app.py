@@ -1,13 +1,17 @@
-import streamlit as st
-from pathlib import Path
 import base64
-import requests
 import json
+from pathlib import Path
+
+import requests
+import streamlit as st
+
 # config
 FILE_NAME = "file_5062418c-c7d2-4493-8a05-3a39485318c4.pdf"
 CLAIM_ID = "clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c"
 CLAIM_URL = "https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c"
-MEDICAL_HISTORY_URL = "https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c&attachmentId=5062418c-c7d2-4493-8a05-3a39485318c4"
+MEDICAL_HISTORY_URL = (
+    "https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c&attachmentId=5062418c-c7d2-4493-8a05-3a39485318c4"
+)
 POLICY_WORDING_URL = "https://www.waggel.co.uk/latest-policy-documents"
 BACKEND_URL = "http://localhost:8000"
 MOCK_RESPONSE = True
@@ -72,13 +76,15 @@ def document_section():
         js = f"window.open('{CLAIM_URL}', '_blank')"
         st.components.v1.html(f"<script>{js}</script>")
     if st.button("Data on Record", key="data", help="Show Data on Record", use_container_width=True, type="secondary"):
-        st.json({
-            "file_name": FILE_NAME,
-            "claim_id": CLAIM_ID,
-            "claim_url": CLAIM_URL,
-            "medical_history_url": MEDICAL_HISTORY_URL,
-            "policy_wording_url": POLICY_WORDING_URL
-        })
+        st.json(
+            {
+                "file_name": FILE_NAME,
+                "claim_id": CLAIM_ID,
+                "claim_url": CLAIM_URL,
+                "medical_history_url": MEDICAL_HISTORY_URL,
+                "policy_wording_url": POLICY_WORDING_URL,
+            }
+        )
 
 
 def klaimzy_header():
@@ -91,7 +97,7 @@ def klaimzy_header():
             <p>{welcome_text}</p>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
     st.markdown(f"##### ClaimID: {CLAIM_ID}")
 
@@ -110,7 +116,7 @@ def analyze_claim_section():
         }
         </style>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )
     # Initialize session state for analysis result
     if "analysis_result" not in st.session_state:
@@ -152,23 +158,22 @@ with col1:
     if st.button("List conversation thread", key="conversation", help="List conversation thread", use_container_width=True, type="secondary"):
         response = requests.get(f"{BACKEND_URL}/list-conversation-thread")
         st.write(response.json())
-    
+
 
 # Chat on the right
 with col2:
     st.title("Ask Klaimzy!")
 
-    
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
     # Create a container for the chat history
     chat_container = st.container()
-    
+
     # Create a container for the input at the bottom
     input_container = st.container()
-    
+
     # Load avatars
     klaimzy_avatar = "../assets/Waggel-Primary-Logos/svg/waggel-badge-blue.svg"
     user_avatar = "../assets/Waggel-Primary-Logos/svg/waggel-badge-black.svg"
@@ -182,18 +187,18 @@ with col2:
 
     # Add some spacing to push the input to the bottom
     st.markdown("<br>" * 5, unsafe_allow_html=True)
-    
+
     # Accept user input at the bottom
     with input_container:
         if prompt := st.chat_input("How can I help you with this claim?"):
             # Add user message to chat history
             st.session_state.messages.append({"role": "user", "content": prompt})
-            
+
             # Display user message in chat message container
             with chat_container:
                 with st.chat_message("user", avatar=user_avatar):
                     st.markdown(prompt)
-                
+
                 # Display assistant response in chat message container
                 with st.chat_message("assistant", avatar=klaimzy_avatar):
 
@@ -204,19 +209,20 @@ with col2:
 
                     message_placeholder = st.empty()
                     message_placeholder.markdown("Thinking... 🤔")
-                    
+
                     response = requests.post(f"{BACKEND_URL}/add-message", json={"message": prompt})
                     message_placeholder.empty()
                     # st.write(response.json())
                     _extracted_response = extract_response(response)
                     st.markdown(_extracted_response)
                     # message_placeholder.markdown(_extracted_response, unsafe_allow_html=True)
-                
+
             # Add assistant response to chat history
             st.session_state.messages.append({"role": "assistant", "content": response})
-            
+
     # Add custom CSS to style the chat interface
-    st.markdown("""
+    st.markdown(
+        """
         <style>
         .stChatFloatingInputContainer {
             position: fixed;
@@ -227,4 +233,6 @@ with col2:
             background: white;
         }
         </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )

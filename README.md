@@ -1,52 +1,37 @@
-# Medical Histories POC :)
+# Medical Histories POC
 
-## Quick Start 🚀
+This repository will form the basis of the medical histories process project.
 
-### Prerequisites
-- Docker and Docker Compose installed
-- OpenAI API key
+### [> Complete Project Roadmap](https://www.notion.so/waggel/Medical-History-Automation-Discovery-250f6406262c80d697cbc00be15fee34?source=copy_link)
 
-### Setup
-1. Clone the repository
-2. Create a `.env` file in the root directory with:
-   ```
-   OPENAI_API_KEY=your_api_key_here
-   ```
+The project is in a greenfield experimental phase.
 
-### Launch
-1. Build and start the services:
-   ```bash
-   docker-compose up --build
-   ```
-2. Access the application:
-   - Frontend: http://localhost
-   - Backend API: http://localhost:8000
+# 🎬 Quick Start
 
-### Development
-- Frontend: Static HTML/JS served via Nginx
-- Backend: FastAPI application with OpenAI integration
-- Both services are containerized and orchestrated via Docker Compose
+`404 not found - coming soon`
 
-### API Endpoints
-- `POST /conversations/` - Initialize a new conversation
-- `POST /conversations/{conversation_id}/messages` - Continue an existing conversation
-- `GET /conversations/{conversation_id}` - Get conversation history
+# 🚀 Launch Current Prototype
 
-## Resources 📚
+To launch the prototype demo:
 
-- [Notion Page](https://www.notion.so/waggel/Medical-History-Automation-Discovery-250f6406262c80d697cbc00be15fee34?source=copy_link)
-- [Vet Lexicon](https://docs.google.com/spreadsheets/d/12CggC5YvgsNhHpTsuYx7n1i5DeiMdYQDdFnRuX7CWLM/edit?gid=0#gid=0)
+```sh
+# ensure docker daeman is running
+open -a docker
 
-## Goals 🎯
+# start the backend API server
+docker compose up
 
-- Extract data in a reliable structured way
-    - Use lexicon if required
-    - Use policy wording if required
+# start the front end
+cd frontend-streamlit &&
+streamlit run streamlit_app.py
+```
 
-## Flag System ‼️⚠️
-The system flags the following issues:
-- Mismatch on internal pet info
-- Mismatch on internal vet info
-- Mismatch on internal vet info
-- Unaccounted for dates
-- Illness occurring BEFORE policy
+---
+
+# 🔮 Future Work
+
+Interact with Notion programatically via the API or agentically MCP.
+
+- [Notion API query database](https://developers.notion.com/reference/post-database-query)
+- [Notion MCP server docs](https://github.com/makenotion/notion-mcp-server)
+- [Notion MCP tutorial](https://www.youtube.com/watch?v=Z1ZQ68DFN6E)

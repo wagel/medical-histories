@@ -263,11 +263,11 @@
         }
 
         @keyframes slideIn {
-            from { 
+            from {
                 opacity: 0;
                 transform: translateY(5px);
             }
-            to { 
+            to {
                 opacity: 1;
                 transform: translateY(0);
             }
@@ -296,9 +296,9 @@
         <div class="ascii-art">
             <pre>        ██╗  ██╗██╗      █████╗ ██╗███╗   ███╗███████╗██╗   ██╗
         ██║ ██╔╝██║     ██╔══██╗██║████╗ ████║╚══███╔╝╚██╗ ██╔╝
-        █████╔╝ ██║     ███████║██║██╔████╔██║  ███╔╝  ╚████╔╝ 
-        ██╔═██╗ ██║     ██╔══██║██║██║╚██╔╝██║ ███╔╝    ╚██╔╝  
-        ██║  ██╗███████╗██║  ██║██║██║ ╚═╝ ██║███████╗   ██║   
+        █████╔╝ ██║     ███████║██║██╔████╔██║  ███╔╝  ╚████╔╝
+        ██╔═██╗ ██║     ██╔══██║██║██║╚██╔╝██║ ███╔╝    ╚██╔╝
+        ██║  ██╗███████╗██║  ██║██║██║ ╚═╝ ██║███████╗   ██║
         ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝   ╚═╝   </pre>
             <div class="by-waggel">
                 <div>by</div>
@@ -311,11 +311,11 @@
         <!-- Left Column -->
         <div class="left-column">
             <p class="welcome-text">Hello! I'm Klaimzy, your AI claims assistant. I'm here to get through nasty medical histories FAST. ⚡️⚡️⚡️</p>
-            
+
             <p class="claim-id">ClaimID: clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c</p>
-            
+
             <button class="button button-primary" onclick="analyzeClaim()">Analyze Claim</button>
-            
+
             <h2>Documents</h2>
             <button class="button button-secondary" onclick="window.open('https://admin.waggel.co.uk/claim/attachment?id=clm-f1d461ce-4e6c-433a-ab93-c7eba7b9c49c&attachmentId=5062418c-c7d2-4493-8a05-3a39485318c4', '_blank')">Medical History</button>
             <button class="button button-secondary" onclick="window.open('https://www.waggel.co.uk/latest-policy-documents', '_blank')">Policy Wording</button>
@@ -343,7 +343,7 @@
         async function analyzeClaim() {
             const chatHistory = document.getElementById('chat-history');
             chatHistory.innerHTML = ''; // Clear existing chat
-            
+
             try {
                 const response = await fetch(`${BACKEND_URL}/conversations/`, {
                     method: 'POST',
@@ -428,14 +428,14 @@
                     }
 
                     const data = await response.json();
-                    
+
                     // Add assistant's response
                     const lastMessage = data.messages[data.messages.length - 1];
                     chatHistory.innerHTML += `
                         <div class="chat-message assistant">
                             <strong>Klaimzy:</strong> ${lastMessage.content}
                         </div>`;
-                    
+
                     chatHistory.scrollTop = chatHistory.scrollHeight;
                 } catch (error) {
                     console.error('Error:', error);
