@@ -10,6 +10,12 @@ The project is in a greenfield experimental phase.
 
 `404 not found - coming soon`
 
+# 💹 Run in Terminal
+
+```
+python src/main.py
+```
+
 # 🚀 Launch Current Prototype
 
 To launch the prototype demo:
